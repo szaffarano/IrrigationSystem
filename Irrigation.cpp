@@ -8,15 +8,16 @@ Irrigation::Irrigation(IrrigationEvent** schedule, DHT* dht, RTC_DS1307* rtc) {
 
 boolean Irrigation::windowOpen() {    
     DateTime now = rtc->now();
+    int secondsNow = now.hour() * 60 * 60 + now.minute() * 60 + now.second();
 
     int i = 0;
     while(schedule[i] != NULL) {
       Instant* start = schedule[i]->getStart();
       Instant* end = schedule[i++]->getEnd();
-      if (
-        now.hour() >= start->getHour()  && now.minute() >= start->getMinutes() && now.second() >= start->getSeconds() &&
-        now.hour() <= end->getHour() && now.minute() <= end->getMinutes() && now.second() <= end->getSeconds()
-      ) {
+      int secondsStart = start->getHour() * 60 * 60 + start->getMinutes() * 60 + start->getSeconds();
+      int secondsEnd = end->getHour() * 60 * 60 + end->getMinutes() * 60 + end->getSeconds();
+      
+      if (secondsNow >= secondsStart && secondsNow <= secondsEnd) {
         return true;
       }
     }
