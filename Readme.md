@@ -1,6 +1,10 @@
+Irrigation System
+=================
+
 Simple temporizador para utilizar como mecanismo de riego.
 
-== Roadmap ==
+Roadmap
+-------
 
  1. Armar el esquematico en kicad
  2. Utilizar shift register (595) para el LCD
